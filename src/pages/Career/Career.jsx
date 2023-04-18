@@ -10,24 +10,25 @@ import Box from '@mui/material/Box';
 import axios from '../../api/apiService';
 import Grid from '@mui/material/Grid';
 import { toast } from 'react-hot-toast';
-import ShowEvents from './ShowEvents';
+// import ShowEvents from './ShowEvents';
 import { Typography } from '@material-tailwind/react';
+import CareerShow from './CareerShow';
  
 const Event = () => {
     const { register, handleSubmit } = useForm()
     const formData = new FormData()
     const handleImage = e => {
-        formData.append("event_image", e.target.files[0]);
+        formData.append("cv", e.target.files[0]);
     }
     const onSubmit = data => {
-        formData.append("event_name", data.ename)
-        formData.append("event_price", data.eprice)
-        formData.append("host_name", data.hname)
-        formData.append("location", data.location)
-        formData.append("start", data.start)
-        formData.append("details", data.desc)
-        formData.append("capacity", data.cap)
-        axios.post("/api/events/", formData)
+        formData.append("name", data.name)
+        formData.append("email", data.email)
+        formData.append("phone", data.phone)
+        formData.append("qualification", data.qualification)
+        formData.append("oppotunities", data.oppotunities)
+        formData.append("address", data.address)
+        
+        axios.post("/api/careers/", formData)
             .then(res => {
                 console.log(res);
                 toast.success("successfully added event")
@@ -36,21 +37,21 @@ const Event = () => {
                 toast.error("can not add event")
             })
     }
-    const [event,setEvent]= useState([]);
+    const [career,setCareer]= useState([]);
     useEffect(()=>{
-        axios.get("/api/events/")
+        axios.get("/api/careers/")
         .then(res=>{
             console.log(res.data);
-            setEvent(res.data)
+            setCareer(res.data)
         })
         .catch(error=>{
             toast.error("can not fetch event")
         })
     },[])
     const handleDelete = e =>{
-        axios.delete(`/api/events/${e}/`).then(res=>{
-          const filter = event.filter(item=>item.id!=e)
-          setEvent(filter)
+        axios.delete(`/api/careers/${e}/`).then(res=>{
+          const filter = career.filter(item=>item.id!=e)
+          setCareer(filter)
           toast.success("successfully delete the data")
         })
         .catch(er=>{
@@ -63,11 +64,11 @@ const Event = () => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Grid container spacing={6}>
                  <Grid item xs={12} sm={6}>
-                 <TextField id="outlined-basic" label="event_name" variant="outlined" {...register("ename")} required type='text' sx={{ width: "100%",m:1 }} />
+                 <TextField id="outlined-basic" label="name" variant="outlined" {...register("name")} required type='text' sx={{ width: "100%",m:1 }} />
                 
-                    <TextField id="outlined-basic" label="event_price" variant="outlined" {...register("eprice")} required type='number' sx={{ width: "100%", m:1}} />
+                    <TextField id="outlined-basic" label="email" variant="outlined" {...register("email")} required type='number' sx={{ width: "100%", m:1}} />
                      
-                    <TextField id="outlined-basic" label="host_name" variant="outlined" {...register("hname")} required type='text' sx={{ width: "100%", m:1 }} />
+                    <TextField id="outlined-basic" label="phone" variant="outlined" {...register("phone")} required type='text' sx={{ width: "100%", m:1 }} />
                     
                     <TextField id="outlined-basic" variant="outlined" onChange={handleImage} required type='file' sx={{ width: "100%", m:1 }} />
                    
@@ -75,12 +76,12 @@ const Event = () => {
                  <Grid item xs={12} sm={6}>
                  
                 
-                    <TextField id="outlined-basic" variant="outlined" {...register("start")} required type='date' sx={{ width: "100%",m:1 }} />
-                    <TextField id="outlined-basic" label="capacity" variant="outlined" {...register("cap")} required type='number' sx={{ width: "100%", m:1}} />
-                    <TextField id="outlined-basic" label="capacity" variant="outlined" {...register("location")} required type='number' sx={{ width: "100%", m:1}} />
-                    <TextField id="outlined-basic" label="description" variant="outlined" multiline
-                        rows={2}
-                        {...register("desc")} required type='text' sx={{ width: "100%",m:1 }} />
+                   
+                    <TextField id="outlined-basic" label="oppotunities" variant="outlined" {...register("oppotunities")} required type='text' sx={{ width: "100%", m:1}} />
+
+                    <TextField id="outlined-basic" label="address" variant="outlined" {...register("address")} required type='number' sx={{ width: "100%", m:1}} />
+                    <TextField id="outlined-basic" label="qualification" variant="outlined" {...register("qualification")} required type='number' sx={{ width: "100%", m:1}} />
+                   
        </Grid>
                     </Grid>
                     <br /><br />
@@ -92,12 +93,12 @@ const Event = () => {
                 </form>
             </Card>
 
-   <Typography sx={{textAlign:"center"}}>Event section</Typography>
+   <Typography sx={{textAlign:"center"}}>Career section</Typography>
 
             <Grid container spacing={2}>
-      {event.map((card) => (
+      {career.map((card) => (
         <Grid item key={card.id} xs={12} sm={6} md={4}>
-           <ShowEvents card={card} handleDelete={handleDelete}/>
+           <CareerShow  card={card}  handleDelete={handleDelete}/>
         </Grid>
       ))}
     </Grid>

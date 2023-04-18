@@ -8,32 +8,38 @@ import Event from './pages/event/Event';
 import ProtectedRoute from './routes/protectedRoute';
 import { ThemeProvider } from '@material-tailwind/react';
 import Drawers from './componants/dashboard';
+import { Toaster } from 'react-hot-toast';
+import Update  from './pages/event/Update';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 
 
 const routes = createBrowserRouter([
     {
-       path:"/",
-       element:<Login/>
+        path: "/",
+        element: <Login />
     },
     {
-        path:"dashboard",
-        element:<Drawers/>
+        path: "dashboard/:type",
+        element: <Drawers />,
     },
     {
         path: "event",
-        element: <ProtectedRoute><Event/></ProtectedRoute>
+        element: <ProtectedRoute><Event /></ProtectedRoute>
     },
-    
+
 ])
 
 root.render(
     <AuthProvider>
-     <ThemeProvider>
-     <RouterProvider router={routes} />
-     </ThemeProvider>
-        
+        <ThemeProvider>
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
+            <RouterProvider router={routes} />
+        </ThemeProvider>
+
     </AuthProvider>
 );
 

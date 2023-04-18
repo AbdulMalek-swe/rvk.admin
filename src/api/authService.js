@@ -5,6 +5,7 @@ async function setTokens(data){
 }
 export const userLogin = async(data)=>{
      const res = await axios.post("/api/login/",data);
+     console.log(res);
       await setTokens(res?.data?.data?.token)
      return res;
 }

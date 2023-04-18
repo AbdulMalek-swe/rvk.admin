@@ -16,8 +16,9 @@ import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Event from '../../pages/event/Event';
+import Career from '../../pages/Career/Career';
 
 const drawerWidth = 240;
 
@@ -29,24 +30,25 @@ function  Drawers(props) {
     setMobileOpen(!mobileOpen);
   };
   const [page,setPages] = React.useState("")
+  const {type} = useParams()
   const drawer = (
     <div>
       <Toolbar />
       <Divider />
       <List>
-          <ListItem  component={Link }to="/dashboard" disablePadding>
+          <ListItem  component={Link }to="/dashboard/home" disablePadding>
             <ListItemButton>
               <ListItemText primary= "Dashboard"/>
             </ListItemButton>
           </ListItem>
-          <ListItem  onClick={()=>setPages("event")}   disablePadding>
+          <ListItem component={Link } to='/dashboard/event'    disablePadding>
             <ListItemButton>
               <ListItemText primary= "Event"/>
             </ListItemButton>
           </ListItem>
-          <ListItem  onClick={()=>setPages("evets")}   disablePadding>
+          <ListItem component={Link } to='/dashboard/career'    disablePadding>
             <ListItemButton>
-              <ListItemText primary= "Event"/>
+              <ListItemText primary= "Career"/>
             </ListItemButton>
           </ListItem>
       </List>
@@ -118,8 +120,7 @@ function  Drawers(props) {
       >
         <Toolbar />
         {
-         ( page.includes("event") &&   <Event/>) ||
-         ( page.includes("evets") &&   <>this is</>)
+         ( type.includes("event") &&   <Event/>)   ||  ( type.includes("career") &&   <Career/>)  
         }
  
       </Box>

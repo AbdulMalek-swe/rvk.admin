@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'https://rvkapidevbymossaddakv16.pythonanywhere.com/' ,
+    baseURL: 'https://rvkapi.vtechsolution.xyz/' ,
     headers: {
       "Content-Type": "multipart/form-data",
     },

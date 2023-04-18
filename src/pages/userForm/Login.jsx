@@ -20,7 +20,7 @@ const Login = () => {
     const res = await login(data)
     console.log(res);
     if (res?.status === 200 || res?.status === 201) {
-      navigate("/dashboard")
+      navigate("/dashboard/home")
     }
   }
   return (
